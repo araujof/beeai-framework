@@ -12,25 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Any, Protocol, runtime_checkable
 
 from pydantic import BaseModel
+from typing_extensions import TypeVar
 
-from beeai_framework.tools import ToolOutput
-from beeai_framework.utils.strings import to_json
+from beeai_framework.plugins.plugin import Plugin
+from beeai_framework.registry import Registry
 
-
-class SearchToolResult(BaseModel):
-    title: str
-    description: str
-    url: str
+TInput = TypeVar("TInput", bound=BaseModel, default=Any)
+TOutput = TypeVar("TOutput", bound=BaseModel, default=Any)
 
 
-class SearchToolOutput(ToolOutput[list[SearchToolResult]]):
-    def get_text_content(self) -> str:
-        return to_json(self.result)
+@runtime_checkable
+class Pluggable(Protocol[TInput, TOutput]):
+    def as_plugin(self) -> Plugin[TInput, TOutput]: ...
 
-    def is_empty(self) -> bool:
-        return len(self.result) == 0
 
-    def sources(self) -> list[str]:
-        return [result.url for result in self.result]
+class PluggableRegistry(Registry[type[Pluggable]]): ...
+
+
+class PluggableInstanceRegistry(Registry[Pluggable]): ...

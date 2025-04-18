@@ -35,7 +35,12 @@ class ToolRunOptions(BaseModel):
 T = TypeVar("T", default=Any)
 
 
-class ToolOutput(ABC):
+class ToolOutput(ABC, Generic[T]):
+    result: T
+
+    def __init__(self, result: T) -> None:
+        self.result = result
+
     @abstractmethod
     def get_text_content(self) -> str:
         pass
@@ -48,10 +53,9 @@ class ToolOutput(ABC):
         return self.get_text_content()
 
 
-class StringToolOutput(ToolOutput):
+class StringToolOutput(ToolOutput[str]):
     def __init__(self, result: str = "") -> None:
-        super().__init__()
-        self.result = result
+        super().__init__(result)
 
     def is_empty(self) -> bool:
         return len(self.result) == 0
@@ -60,10 +64,7 @@ class StringToolOutput(ToolOutput):
         return self.result
 
 
-class JSONToolOutput(ToolOutput, Generic[T]):
-    def __init__(self, result: T) -> None:
-        self.result = result
-
+class JSONToolOutput(Generic[T], ToolOutput[T]):
     def get_text_content(self) -> str:
         return to_json(self.result)
 
