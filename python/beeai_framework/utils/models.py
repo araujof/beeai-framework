@@ -27,6 +27,8 @@ from typing_extensions import TypeVar
 
 from beeai_framework.utils.dicts import exclude_keys
 
+from beeai_framework.utils.dicts import exclude_keys
+
 logger = Logger(__name__)
 
 T = TypeVar("T", bound=BaseModel)
