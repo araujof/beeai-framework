@@ -1,5 +1,4 @@
-name: examples.plugins.workflow.multi_agents.LocationAgent
-alias: LocationAgent
+name: LocationAgent
 creator: Bee Team
 inherits: Workflow
 description: An agent that gathers detailed information and weather about a location.

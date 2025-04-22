@@ -2,8 +2,6 @@ import asyncio
 import sys
 import traceback
 
-from beeai_framework.backend import ChatModel
-from beeai_framework.emitter import EmitterOptions
 from beeai_framework.errors import FrameworkError
 from beeai_framework.plugins.types import PluggableRegistry
 from examples.helpers.io import ConsoleReader

@@ -1,5 +1,4 @@
-name: examples.plugins.workflow.multi_agents.Researcher
-alias: Researcher
+name: Researcher
 creator: Bee Team
 inherits: Prompt
 description: A wikipedia researcher agent
@@ -15,4 +14,4 @@ config:
     Provide a short history of {location}.
   tools:
     - Wikipedia
-  
+

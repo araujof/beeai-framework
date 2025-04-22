@@ -5,6 +5,7 @@ import traceback
 from beeai_framework.backend import ChatModel
 from beeai_framework.emitter import EmitterOptions
 from beeai_framework.errors import FrameworkError
+from beeai_framework.workflows import AgentWorkflow
 from examples.helpers.io import ConsoleReader
 
 

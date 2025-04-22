@@ -1,5 +1,4 @@
-name: examples.plugins.workflow.multi_agents.DataSynthesizer
-alias: DataSynthesizer
+name: DataSynthesizer
 creator: Bee Team
 inherits: Prompt
 description: A meticulous and creative data synthesizer

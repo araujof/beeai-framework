@@ -1,5 +1,4 @@
-name: examples.plugins.workflow.multi_agents.WeatherForecaster
-alias: WeatherForecaster
+name: WeatherForecaster
 creator: Bee Team
 inherits: Prompt
 description: A weather forecaster

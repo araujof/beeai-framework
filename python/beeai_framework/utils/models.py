@@ -32,7 +32,7 @@ from beeai_framework.utils.dicts import exclude_keys
 logger = Logger(__name__)
 
 T = TypeVar("T", bound=BaseModel)
-ModelLike = Union[T, dict[str, Any]]  # noqa: UP007
+ModelLike = Union[T, dict[str, Any]]
 
 
 def to_model(cls: type[T], obj: ModelLike[T]) -> T:
@@ -97,7 +97,7 @@ class JSONSchemaModel(ABC, BaseModel):
             target_type: type | Any = type_mapping.get(param.get("type"))
             is_optional = param_name not in required
             if is_optional:
-                target_type = Optional[target_type] if target_type else type(None)  # noqa: UP007
+                target_type = Optional[target_type] if target_type else type(None)
 
             if isinstance(param.get("const"), str):
                 target_type = Literal[param["const"]]

@@ -30,6 +30,9 @@ from beeai_framework.utils.models import ModelLike, to_model
 TInput = TypeVar("TInput", bound=BaseModel)
 TOutput = TypeVar("TOutput", bound=BaseModel)
 
+class TaskInput(BaseModel):
+    input: Any
+    context: Dict[str, Any]
 
 class PluginKwargs(TypedDict, total=False):
     context: dict[str, Any]
