@@ -1,0 +1,13 @@
+name: examples.plugins.workflow.multi_agents.LocationAgent
+alias: LocationAgent
+creator: Bee Team
+inherits: Workflow
+description: An agent that gathers detailed information and weather about a location.
+version: 0.1
+config:
+  workflow:
+    - WeatherForecaster
+    - Researcher
+    - DataSynthesizer
+  event_filter:
+    - event.creator.type == ChatModel and event.name == success

@@ -1,0 +1,16 @@
+name: examples.plugins.workflow.multi_agents.DataSynthesizer
+alias: DataSynthesizer
+creator: Bee Team
+inherits: Prompt
+description: A meticulous and creative data synthesizer
+version: 0.1
+config:
+  model_id: ollama/granite3.2:latest
+  memory: default
+  parameters:
+    decoding_method: 'greedy'
+    max_new_tokens: 250
+  instruction: You can combine disparate information into a final coherent summary.
+  template: |
+    Summarize the historical and weather data for {location}.
+    A paragraph that describes the history of {location}, followed by the current weather conditions.

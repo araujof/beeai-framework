@@ -1,0 +1,11 @@
+logging:
+  # Setting the log level: CRITICAL, ERROR, WARNING, INFO, DEBUG
+  level: '{{ env["LOG_LEVEL"] or "DEBUG" }}'
+plugin:
+  configpaths:
+    - resources/plugins
+  codepaths:
+    - src
+    - resources/plugins
+  plugins:
+    - LocationAgent

@@ -1,0 +1,18 @@
+name: examples.plugins.workflow.multi_agents.Researcher
+alias: Researcher
+creator: Bee Team
+inherits: Prompt
+description: A wikipedia researcher agent
+version: 0.1
+config:
+  model_id: ollama/granite3.2:latest
+  memory: default
+  parameters:
+    decoding_method: 'greedy'
+    max_new_tokens: 250
+  instruction: You look up and provide information about a specific topic.
+  template: |
+    Provide a short history of {location}.
+  tools:
+    - Wikipedia
+  
