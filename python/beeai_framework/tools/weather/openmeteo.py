@@ -13,21 +13,22 @@
 # limitations under the License.
 
 
-import json
 from datetime import UTC, date, datetime
 from typing import Any, Literal
 from urllib.parse import urlencode
 
 import httpx
 import requests
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, Field
 
 from beeai_framework.context import RunContext
 from beeai_framework.emitter.emitter import Emitter
 from beeai_framework.logger import Logger
+from beeai_framework.tools import JSONToolOutput
 from beeai_framework.tools.errors import ToolInputValidationError
 from beeai_framework.tools.tool import Tool
-from beeai_framework.tools.types import StringToolOutput, ToolRunOptions
+from beeai_framework.tools.types import ToolRunOptions
+from beeai_framework.utils.models import AnyModel
 
 logger = Logger(__name__)
 
@@ -46,11 +47,11 @@ class OpenMeteoToolInput(BaseModel):
     )
 
 
-class OpenMeteoTool(Tool[OpenMeteoToolInput, ToolRunOptions, StringToolOutput]):
+class OpenMeteoTool(Tool[OpenMeteoToolInput, ToolRunOptions, JSONToolOutput[dict[str, Any]]]):
     name = "OpenMeteoTool"
     description = "Retrieve current, past, or future weather forecasts for a location."
     input_schema = OpenMeteoToolInput
-    output_schema = RootModel[str]
+    output_schema = AnyModel
 
     def __init__(self, options: dict[str, Any] | None = None) -> None:
         super().__init__(options)
@@ -107,7 +108,7 @@ class OpenMeteoTool(Tool[OpenMeteoToolInput, ToolRunOptions, StringToolOutput]):
 
     async def _run(
         self, input: OpenMeteoToolInput, options: ToolRunOptions | None, context: RunContext
-    ) -> StringToolOutput:
+    ) -> JSONToolOutput[dict[str, Any]]:
         params = urlencode(self.get_params(input), doseq=True)
         logger.debug(f"Using OpenMeteo URL: https://api.open-meteo.com/v1/forecast?{params}")
 
@@ -117,4 +118,4 @@ class OpenMeteoTool(Tool[OpenMeteoToolInput, ToolRunOptions, StringToolOutput]):
                 headers={"Content-Type": "application/json", "Accept": "application/json"},
             )
             response.raise_for_status()
-            return StringToolOutput(json.dumps(response.json()))
+            return JSONToolOutput(response.json())

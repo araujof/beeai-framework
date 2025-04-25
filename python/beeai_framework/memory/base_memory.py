@@ -92,4 +92,8 @@ class BaseMemory(ABC, Pluggable):
         return type(self)()
 
     def as_plugin(self) -> Plugin[Any, Any]:
-        return plugin(self.add, name=f"{self.__class__.__name__}", description="Memory plugin")
+        @plugin(name=f"{type(self).__name__}", description="Memory plugin")
+        async def connector(*, message: AnyMessage) -> None:
+            await self.add(message)
+
+        return connector
